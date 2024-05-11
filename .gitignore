@@ -31,3 +31,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+
+# Ignore pgdata directory for PostgreSQL
+/pg_data/*
