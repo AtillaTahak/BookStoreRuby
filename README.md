@@ -35,7 +35,7 @@
 
 ## Overview
 
-![screenshot](scrrenshot1.png)
+![screenshot](screenshot1.png)
 
 This project focuses on the backend development of a Book Store application using Rails and PostgreSQL.
 
@@ -85,11 +85,11 @@ After start server with rails you can create user with [Swagger](http://127.0.0.
 
 ```json
 	{
-	"user": {
-		"id": 4,
-		"username": "example3"
-	},
-	"token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0fQ.UWmeJanF_bZekt-gYXhQRDAAv9XpRsQtKzLKnIN2ue4"
+		"user": {
+			"id": 4,
+			"username": "example3"
+		},
+		"token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0fQ.UWmeJanF_bZekt-gYXhQRDAAv9XpRsQtKzLKnIN2ue4"
 	}
 ```
 You need to copy token value. This token is required for authorized transactions. When you need to request api for authorized example request:
@@ -120,6 +120,8 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and yo
 $ git clone https://gitlab.com/atillataha/bookstore/
 
 $ cd bookstore
+
+$ cp .env.example .env
 
 $ docker compose up --build
 ```
