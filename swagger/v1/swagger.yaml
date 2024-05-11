@@ -1,0 +1,242 @@
+openapi: 3.0.3
+info:
+  title: Bookstore API
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    Book:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        image_url:
+          type: string
+paths:
+  /v1/users:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                    password:
+                      type: string
+                    email:
+                      type: string
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      password:
+                        type: string
+                      email:
+                        type: string
+                  token:
+                    type: string
+  /v1/auth/login:
+    post:
+      summary: Log in a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      password:
+                        type: string
+                      email:
+                        type: string
+                  token:
+                    type: string
+        '400':
+          description: Invalid username or password
+  /v1/auth/logout:
+    get:
+      summary: Log out a user
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: User logged out successfully
+  /v1/cart_items/list:
+    get:
+      summary: List all cart items for the current user
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: A list of cart items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CartItem'
+  /v1/cart_items/:
+    post:
+      summary: Add a book to the cart or update quantity if it already exists
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book_id:
+                  type: integer
+                quantity:
+                  type: integer
+      responses:
+        '201':
+          description: Cart item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Invalid input
+  /v1/cart_items/{book_id}:
+    parameters:
+      - in: path
+        name: book_id
+        required: true
+        schema:
+          type: integer
+    put:
+      summary: Update the quantity of a book in the cart
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+      responses:
+        '200':
+          description: Cart item updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Invalid input
+    delete:
+      summary: Remove a book from the cart
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Cart item deleted
+  /v1/books/list:
+    get:
+      summary: List all books
+      responses:
+        '200':
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+  /v1/books/:
+    post:
+      summary: Create a new book
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Book created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/books/{id}:
+    get:
+      summary: Get a book by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A single book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+  /v1/orders/payment:
+    get:
+      summary: Payment on your Cart Items
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Payment Approved
+        '400':
+          description: Payment Error
