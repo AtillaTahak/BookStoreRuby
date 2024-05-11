@@ -7,9 +7,12 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore all environment files (except templates).
-/.env*
-!/.env*.erb
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -32,6 +35,5 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-
-# Ignore pgdata directory for PostgreSQL
-/pg_data/*
+# db files
+/pg_data
