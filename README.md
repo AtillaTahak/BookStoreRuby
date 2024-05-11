@@ -28,6 +28,7 @@
 - [How to use](#how-to-use)
 - [Swagger](#swagger)
 - [How To Use with Docker](#how-to-use-with-docker)
+- [To Run Test](#to-run-test)
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
 
@@ -132,6 +133,14 @@ http://127.0.0.1:3000/api-docs/index.html
 Access pgAdmin for managing PostgreSQL databases:
 
 http://localhost:5050
+
+## To Run Test
+
+
+```bash
+$ bundle exec rails test
+```
+
 
 ## Acknowledgements
 
